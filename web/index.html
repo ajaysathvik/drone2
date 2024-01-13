@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <div class="main-section">
+      <div class="section s1">
+        <div class="heading">
+          <div class="heading-box"></div>
+        </div>
+        <div class="gyro">
+          <div class="gyro-box" id="gyro">
+            <div class="bar"></div>
+          </div>
+        </div>
+        <div class="compass" id="compass">
+          <img
+            src="./assests/compass (2).png"
+            alt="compass"
+            id="compass-needle"
+          />
+          <div class="compass-value"></div>
+        </div>
+        <div class="mission-data">
+          <div class="mission-data-box">
+            <div id="mission"></div>
+            <div id="mission-window">
+              <div class="set-alt">
+                <div class="alt-text-window">Set altitude :</div>
+                <div id="alt-value1"><input type="number" id="alt" /></div>
+              </div>
+              <div class="set-alt">
+                <div class="alt-text-window">Set longitude :</div>
+                <div id="alt-value2"><input type="number" id="lon" /></div>
+              </div>
+              <div class="set-alt">
+                <div class="alt-text-window">Set latitude :</div>
+                <div id="alt-value3"><input type="number" id="lat" /></div>
+              </div>
+              <div class="cancel-button" id="cancel-button">Cancel</div>
+              <div class="confirm-button" id="confirm-button">Confirm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section s2">
+        <div class="main-tab">
+          <div class="arm-status">
+            <img src="./assests/camera-drone.png" alt="drone" />
+            <div class="arm-text">
+              <h4 class="arm-status-text">Arm Status</h4>
+              <h4 class="arm-value" id="status-value"></h4>
+            </div>
+          </div>
+          <div class="mode">
+            <img src="./assests/camera-drone.png" alt="drone" />
+            <div class="mode-text">
+              <h4 class="mode-status-text">Mode</h4>
+              <h4 class="mode-value" id="mode-value"></h4>
+            </div>
+          </div>
+          <div class="battery">
+            <img src="./assests/Battery.png" alt="battery" />
+            <div class="battery-text">
+              <h4 class="battery-status-text">Battery</h4>
+              <h4 class="battery-value" id="battery-value"></h4>
+            </div>
+          </div>
+          <div class="temp">
+            <img src="./assests/temp.png" alt="temp" />
+            <div class="temp-text">
+              <h4 class="temp-status-text">Temperature</h4>
+              <h4 class="temp-value" id="temperature-value"></h4>
+            </div>
+          </div>
+          <div class="alt">
+            <img src="./assests/alt.png" alt="alt" />
+            <div class="alt-text">
+              <h4 class="alt-status-text">Altitude</h4>
+              <h4 class="alt-value" id="altitude-value"></h4>
+            </div>
+          </div>
+          <div class="action" id="action-button">
+            <h4>Action</h4>
+          </div>
+        </div>
+        <div class="camera"></div>
+        <div class="map" id="map">
+          <div class="map-button" id="map-button">Confirm</div>
+        </div>
+      </div>
+      <div class="section s3">
+        <h4 class="drone-status-heading">Drone Status</h4>
+        <div class="drone-details-box">
+          <div class="latitude value-box">
+            <div>latitude</div>
+            <div class="value" id="latitude-value2"></div>
+          </div>
+          <div class="longitude value-box">
+            <div>longitude</div>
+            <div class="value" id="longitude-value2"></div>
+          </div>
+          <div class="altitude value-box">
+            <div>altitude</div>
+            <div class="value" id="altitude-value2"></div>
+          </div>
+          <div class="ground-speed value-box">
+            <div>ground speed</div>
+            <div class="value" id="ground-speed-value"></div>
+          </div>
+          <div class="battery2 value-box">
+            <div>battery</div>
+            <div class="value" id="battery-value2"></div>
+          </div>
+          <div class="temperature value-box">
+            <div>temperature</div>
+            <div class="value" id="temperature-value2"></div>
+          </div>
+          <div class="system-status value-box">
+            <div>system status</div>
+            <div class="value" id="status-value2"></div>
+          </div>
+          <div class="mode2 value-box">
+            <div>mode</div>
+            <div class="value" id="mode-value2"></div>
+          </div>
+          <div class="arm value-box">
+            <div>armed</div>
+            <div class="value" id="arm-value"></div>
+          </div>
+          <div class="direction value-box">
+            <div>direction</div>
+            <div class="value" id="direction-value2"></div>
+          </div>
+          <div class="version value-box">
+            <div>version</div>
+            <div class="value" id="version-value"></div>
+          </div>
+          <div class="compass-status value-box">
+            <div>compass</div>
+            <div class="value" id="compass-value2"></div>
+        </div>
+      </div>
+    </div>
+    <script src="eel.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
