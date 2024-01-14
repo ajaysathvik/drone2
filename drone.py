@@ -1,11 +1,6 @@
 from dronekit import connect , VehicleMode , LocationGlobalRelative , LocationGlobal , Command
-from dronekit.mavlink import MAVConnection 
 import matplotlib.pyplot as plt
-import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-from progress.bar import IncrementalBar
 import time
-from pymavlink import mavutil
 import cv2
 import eel
 
@@ -75,7 +70,6 @@ def check_pitch():
     pitch = vehicle.attitude.pitch
     
     
-# checking the drone's velocity
 def check_velocity():
 
     northward_velocity = vehicle.velocity[0]
@@ -147,7 +141,6 @@ def check_last_heartbeat():
 def check_home_location():
     print (vehicle.home_location)
 
-<<<<<<< HEAD
 @eel.expose
 def mission_check():
     cmds = vehicle.commands
@@ -159,7 +152,7 @@ def compass_calibration():
 
 @eel.expose
 def set_mode(mode):
-    vehicle.mode = vehicleMode(mode)
+    vehicle.mode = VehicleMode(mode)
     
 @eel.expose
 def set_status(status):
@@ -167,7 +160,7 @@ def set_status(status):
      
 @eel.expose
 def set_mission(lat,lon,alt):
-    vehicle.mode = vehicleMode("GUIDED")
+    vehicle.mode = VehicleMode("GUIDED")
     vehicle.armed = True
     vehicle.simple_takeoff(alt)
     while True:
@@ -190,7 +183,7 @@ def check_location_alt():
 
 @eel.expose
 def make_guided():
-    vehicle.mode = vehicleMode("GUIDED")
+    vehicle.mode = VehicleMode("GUIDED")
     
 @eel.expose
 def compass():
@@ -235,29 +228,3 @@ def ground_speed():
 # eel.init(path=get_path("web"))
 eel.init("web")
 eel.start('index.html', size=(2400,1080))
-=======
-
-def main():      
-    check_system_status_2()
-    check_mode_2()    
-    
-    vehicle.mode = VehicleMode("GUIDED")
-    while vehicle.mode.name != "GUIDED":
-        print("Waiting for drone to enter GUIDED flight mode")
-        time.sleep(1)
-
-    vehicle.armed = True
-    while not vehicle.armed:
-        print("Waiting for arming...")
-        time.sleep(1)
-    print("Armed!")
-            
-    vehicle.simple_takeoff(10)
-    while True:
-        if vehicle.location.global_relative_frame.alt >= 9.5:
-            print("Reached target altitude")
-            break
-        time.sleep(1)
-
-main()
->>>>>>> parent of e6a2bc0 (.)

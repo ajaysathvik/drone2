@@ -193,25 +193,25 @@ async function location_coordinates() {
       await eel.set_status("ACTIVE")();
       await eel.set_mode("GUIDED")();
       for (let i = 1; i < markers.length; ) {
-        var lat = markers._latlng.lat.shift;
-        var lon = markers._latlng.lng.shift;
+        var lat = markers[i]._latlng.lat;
+        var lon = markers[i]._latlng.lng;
         console.log(lat);
         console.log(lon);
         await eel.set_mission(lat, lon, 2)();
-        // while (true) {
-        //   latitude = await eel.check_location_lat()();
-        //   longitude = await eel.check_location_lon()();
-        //   if (
-        //     latitude.toFixed(4) == lat.toFixed(4) &&
-        //     longitude.toFixed(4) == lon.toFixed(4)
-        //   ) {
-        //     if (i >= 2) {
-        //       markers.splice(i - 1, i);
-        //     }
-        //     i++;
-        //     break;
-        //   }
-        // }
+        while (true) {
+          latitude = await eel.check_location_lat()();
+          longitude = await eel.check_location_lon()();
+          if (
+            latitude.toFixed(4) == lat.toFixed(4) &&
+            longitude.toFixed(4) == lon.toFixed(4)
+          ) {
+            if (i >= 2) {
+              markers.splice(i - 1, i);
+            }
+            i++;
+            break;
+          }
+        }
       }
     });
 }
