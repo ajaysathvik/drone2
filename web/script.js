@@ -5,13 +5,28 @@ async function check_battery() {
 }
 
 async function check_altitude() {
-  const output = await eel.check_altitude()();
+  var output = await eel.check_altitude()();
   rounded_output = output.toFixed(2);
   if (output < 0) {
     rounded_output = 0;
   }
   document.getElementById("altitude-value").innerHTML = rounded_output + " m";
   document.getElementById("altitude-value2").innerHTML = rounded_output + " m";
+  document.getElementById("gyro-text1").innerHTML = rounded_output + " m";
+  output = -(output / 4) - 19.4;
+  document.getElementById("gyro-value1").style.transform =
+    "translateY(" + output + "vh)";
+}
+
+async function check_roll() {
+  const output = await eel.check_roll()();
+  rounded_output = output.toFixed(2);
+  if (rounded_output == -0.0) {
+    rounded_output = 0.0;
+  }
+  document.getElementById("gyro-text2").innerHTML = rounded_output + " °";
+  document.getElementById("gyro-value2").style.transform =
+    "translate(0vw, -39.5vh) rotate(" + output + "deg)";
 }
 
 async function check_temperature() {
@@ -141,6 +156,15 @@ async function mission_check() {
   }
 }
 
+async function check_location() {
+  latitude = await eel.check_location_lat()();
+  longitude = await eel.check_location_lon()();
+  console.log(latitude);
+  console.log(longitude);
+  document.getElementById("latitude-value2").innerHTML = latitude.toFixed(5);
+  document.getElementById("longitude-value2").innerHTML = longitude.toFixed(5);
+}
+
 async function location_coordinates() {
   latitude = await eel.check_location_lat()();
   longitude = await eel.check_location_lon()();
@@ -160,7 +184,7 @@ async function location_coordinates() {
       iconAnchor: [20, 20],
     })
   );
-  
+
   let line = L.polyline([], { color: "red" }).addTo(map);
 
   map.on("click", (e) => {
@@ -182,9 +206,6 @@ async function location_coordinates() {
     var latitude = await eel.check_location_lat()();
     var longitude = await eel.check_location_lon()();
     newmarker.setLatLng([latitude, longitude]);
-    document.getElementById("latitude-value2").innerHTML = latitude.toFixed(3);
-    document.getElementById("longitude-value2").innerHTML =
-      longitude.toFixed(3);
   }, 100);
 
   document
@@ -197,7 +218,7 @@ async function location_coordinates() {
         var lon = markers[i]._latlng.lng;
         console.log(lat);
         console.log(lon);
-        await eel.set_mission(lat, lon, 2)();
+        await eel.set_mission(lat, lon, 10)();
         while (true) {
           latitude = await eel.check_location_lat()();
           longitude = await eel.check_location_lon()();
@@ -228,6 +249,8 @@ setInterval(() => {
   Ground_speed();
   arm();
   version();
+  check_roll();
+  check_location();
 }, 100);
 
 mission_check();

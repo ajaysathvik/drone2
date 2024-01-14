@@ -61,10 +61,11 @@ def check_altitude():
     altitude = vehicle.location.global_relative_frame.alt
     return altitude
 
-def check_attitude():
-    pitch = vehicle.attitude.pitch  
-    yaw = vehicle.attitude.yaw  
-    roll = vehicle.attitude.roll 
+@eel.expose
+def check_roll():
+    roll = vehicle.attitude.roll
+    return roll
+     
 
 def check_pitch():
     pitch = vehicle.attitude.pitch
@@ -156,7 +157,7 @@ def set_mode(mode):
     
 @eel.expose
 def set_status(status):
-    vehicle.system_status.state = status   
+    vehicle.system_status.state = status  
      
 @eel.expose
 def set_mission(lat,lon,alt):

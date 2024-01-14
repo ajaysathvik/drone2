@@ -59,16 +59,20 @@
   margin-top: 0.7vh;
 }
 
-.gyro-box {
-  width: 90%;
-  height: 90%;
-  border-radius: 10px;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f3f7f9;
+#gyro-text1 {
+  position: absolute;
+  top: 26.5vh;
+  left: 10.3vw;
+  z-index: 9999;
 }
+
+#gyro-text2 {
+  position: absolute;
+  top: 26.5vh;
+  left: 2.2vw;
+  z-index: 9999;
+}
+
 .gyro-box {
   width: 90%;
   height: 90%;
@@ -76,23 +80,28 @@
   box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  background-image: url(./assests/Untitled_design-removebg-preview.png);
-  background-size: cover; 
-  background-position: center; 
- 
 }
 
-.bar{
-background-color:#005fcc;
-height:5px;
-width: 160px;
-margin-top: 71px;
-border-radius: 50%;
-
+.gyro-img {
+  max-width: 12vw;
+  max-height: 12vw;
+  margin: auto;
 }
-.gyro img {
-  max-width: 14vw;
-  max-height: 14vh;
+
+.gyro-value1 {
+  transform: translate(0vw, -19.4vh) rotate(0deg);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.gyro-value2 {
+  transform: translate(0vw, -39.4vh) rotate(0deg);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  z-index: 9999;
 }
 
 .compass {
