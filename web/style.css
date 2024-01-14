@@ -298,20 +298,30 @@ input {
 .battery {
   width: 12vw;
   height: 10vh;
+  padding-left: 6vw;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .battery img {
-  max-width: 13vw;
-  max-height: 13vh;
+  max-width: 3vw;
+  max-height: 6vh;
   margin-left: -4vw;
+}
+
+#battery-value-bar {
+  position: absolute;
+  top: 4.5vh;
+  left: 43.42vw;
+  background-color: #34c759;
+  height: 2vh;
+  border-radius: 4px;
 }
 
 .battery-text {
   display: flex;
-  margin-left: -2.5vw;
+  margin-left: 1vw;
   flex-direction: column;
 }
 

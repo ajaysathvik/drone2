@@ -1,7 +1,22 @@
 async function check_battery() {
-  const output = await eel.check_battery()();
+  var output = await eel.check_battery()();
   document.getElementById("battery-value").innerHTML = output + "%";
   document.getElementById("battery-value2").innerHTML = output + "%";
+  if (output == 0) {
+    output = 0;
+  } else {
+    output = (2.25 * output) / 100;
+    console.log(output);
+  }
+
+  if (output < 0.45) {
+    document.getElementById("battery-value-bar").style.backgroundColor =
+      "#ff3b30";
+  } else if (output <= 1.125 && output > 0.45) {
+    document.getElementById("battery-value-bar").style.backgroundColor =
+      "#ffcc0a";
+  }
+  document.getElementById("battery-value-bar").style.width = output + "vw";
 }
 
 async function check_altitude() {
@@ -44,7 +59,7 @@ async function check_status() {
 async function Ground_speed() {
   const output = await eel.ground_speed()();
   document.getElementById("ground-speed-value").innerHTML =
-    output.toFixed(2) + " m/s";
+    output.toFixed(1) + " m/s";
 }
 
 async function arm() {
@@ -159,8 +174,6 @@ async function mission_check() {
 async function check_location() {
   latitude = await eel.check_location_lat()();
   longitude = await eel.check_location_lon()();
-  console.log(latitude);
-  console.log(longitude);
   document.getElementById("latitude-value2").innerHTML = latitude.toFixed(5);
   document.getElementById("longitude-value2").innerHTML = longitude.toFixed(5);
 }
@@ -213,25 +226,45 @@ async function location_coordinates() {
     .addEventListener("click", async function () {
       await eel.set_status("ACTIVE")();
       await eel.set_mode("GUIDED")();
-      for (let i = 1; i < markers.length; ) {
+      for (let i = 1; i < markers.length;i++ ) {
         var lat = markers[i]._latlng.lat;
         var lon = markers[i]._latlng.lng;
         console.log(lat);
         console.log(lon);
         await eel.set_mission(lat, lon, 10)();
+        // while (true) {
+        //   latitude = await eel.check_location_lat()();
+        //   longitude = await eel.check_location_lon()();
+        //   if (
+        //     latitude.toFixed(4) == lat.toFixed(4) &&
+        //     longitude.toFixed(4) == lon.toFixed(4)
+        //   ) {
+        //     if (i >= 2) {
+        //       markers.splice(i - 1, i);
+        //     }
+        //     i++;
+        //     break;
+        //   }
+        // }
+        const coordinateTolerance = 0.0001; // Adjust the tolerance as needed
+
         while (true) {
           latitude = await eel.check_location_lat()();
           longitude = await eel.check_location_lon()();
+
           if (
-            latitude.toFixed(4) == lat.toFixed(4) &&
-            longitude.toFixed(4) == lon.toFixed(4)
+            Math.abs(latitude - lat) < coordinateTolerance &&
+            Math.abs(longitude - lon) < coordinateTolerance
           ) {
-            if (i >= 2) {
-              markers.splice(i - 1, i);
-            }
-            i++;
+            // if (i >= 2) {
+            //   markers.splice(i - 3, 1); // Fix for removing only one element
+            // }
+            // i++;
             break;
           }
+
+          // Introduce a delay or yield control to prevent blocking the event loop
+          await new Promise((resolve) => setTimeout(resolve, 100));
         }
       }
     });
