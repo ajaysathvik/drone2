@@ -2,3 +2,4 @@ dronekit == 2.9.2
 Eel == 0.16.0
 opencv-python == 4.8.1.78
 matplotlib == 3.8.2
+pytest == 7.4.4

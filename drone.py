@@ -3,6 +3,11 @@ import matplotlib.pyplot as plt
 import time
 import cv2
 import eel
+import logging
+
+logging.basicConfig(filename='logile.log',format='%(asctime)s - %(message)s',filemode='w')
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 vehicle = connect('127.0.0.1:14550', wait_ready=True)
 
