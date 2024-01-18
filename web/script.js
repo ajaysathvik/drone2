@@ -1,12 +1,12 @@
 async function check_battery() {
-  var output = await eel.check_battery()();
+  output = await eel.check_battery()();
+  console.log(output);
   document.getElementById("battery-value").innerHTML = output + "%";
   document.getElementById("battery-value2").innerHTML = output + "%";
   if (output == 0) {
     output = 0;
   } else {
     output = (2.25 * output) / 100;
-    console.log(output);
   }
 
   if (output < 0.45) {
@@ -181,93 +181,27 @@ async function check_location() {
 async function location_coordinates() {
   latitude = await eel.check_location_lat()();
   longitude = await eel.check_location_lon()();
-  const map = L.map("map").setView([latitude, longitude], 13);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "",
-  }).addTo(map);
-  let markers = [];
 
-  newmarker = L.marker([latitude, longitude]);
-  newmarker.addTo(map);
-  markers.push(newmarker);
-  newmarker.setIcon(
-    L.icon({
-      iconUrl: "./assests/camera-drone (2).png",
-      iconSize: [40, 40],
-      iconAnchor: [20, 20],
-    })
-  );
+  // const map = new google.maps.Map(document.getElementById("map"), {
+  //   center: { lat: latitude, lng: longitude },
+  //   zoom: 8,
+  // });
 
-  let line = L.polyline([], { color: "red" }).addTo(map);
+  // // Create a marker for the specified location
+  // const marker = new google.maps.Marker({
+  //   position: { lat, lng },
+  //   map: map,
+  // });
 
-  map.on("click", (e) => {
-    const newMarker = L.marker(e.latlng).addTo(map);
-    markers.push(newMarker);
-    if (markers.length > 1) {
-      var lastMarker = markers[markers.length - 2];
-      const lastLatLng = lastMarker.getLatLng();
-      line.addLatLng(lastLatLng);
-    }
-    const lastLatLng = newMarker.getLatLng();
-    line.addLatLng(lastLatLng);
-  });
+  // // Optionally, add a custom popup to the marker
+  // const content = "This is my point!";
+  // const infoWindow = new google.maps.InfoWindow({
+  //   content,
+  // });
 
-  setInterval(async () => {
-    if (markers.length > 1) {
-      document.getElementsByClassName("map-button")[0].style.display = "flex";
-    }
-    var latitude = await eel.check_location_lat()();
-    var longitude = await eel.check_location_lon()();
-    newmarker.setLatLng([latitude, longitude]);
-  }, 100);
-
-  document
-    .getElementsByClassName("map-button")[0]
-    .addEventListener("click", async function () {
-      await eel.set_status("ACTIVE")();
-      await eel.set_mode("GUIDED")();
-      for (let i = 1; i < markers.length;i++ ) {
-        var lat = markers[i]._latlng.lat;
-        var lon = markers[i]._latlng.lng;
-        console.log(lat);
-        console.log(lon);
-        await eel.set_mission(lat, lon, 10)();
-        // while (true) {
-        //   latitude = await eel.check_location_lat()();
-        //   longitude = await eel.check_location_lon()();
-        //   if (
-        //     latitude.toFixed(4) == lat.toFixed(4) &&
-        //     longitude.toFixed(4) == lon.toFixed(4)
-        //   ) {
-        //     if (i >= 2) {
-        //       markers.splice(i - 1, i);
-        //     }
-        //     i++;
-        //     break;
-        //   }
-        // }
-        const coordinateTolerance = 0.0001; // Adjust the tolerance as needed
-
-        while (true) {
-          latitude = await eel.check_location_lat()();
-          longitude = await eel.check_location_lon()();
-
-          if (
-            Math.abs(latitude - lat) < coordinateTolerance &&
-            Math.abs(longitude - lon) < coordinateTolerance
-          ) {
-            // if (i >= 2) {
-            //   markers.splice(i - 3, 1); // Fix for removing only one element
-            // }
-            // i++;
-            break;
-          }
-
-          // Introduce a delay or yield control to prevent blocking the event loop
-          await new Promise((resolve) => setTimeout(resolve, 100));
-        }
-      }
-    });
+  // marker.addListener("click", () => {
+  //   infoWindow.open(map, marker);
+  // });
 }
 
 location_coordinates();

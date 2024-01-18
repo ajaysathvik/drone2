@@ -9,7 +9,7 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     />
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
   </head>
   <body>
     <div class="main-section">
@@ -19,11 +19,21 @@
         </div>
         <div class="gyro">
           <div class="gyro-box" id="gyro">
-              <img src="./assests/Slice 1.png" alt="gyro" class="gyro-img"/>
-              <img src="./assests/Slice_1__4_-removebg-preview.png" alt="gyro" class="gyro-value1" id="gyro-value1"/>
-              <div id="gyro-text1"></div>
-              <div id="gyro-text2"></div>
-              <img src="./assests/Slice_1__5_-removebg-preview.png" alt="gyro" class="gyro-value2" id="gyro-value2"/>
+            <img src="./assests/Slice 1.png" alt="gyro" class="gyro-img" />
+            <img
+              src="./assests/Slice_1__4_-removebg-preview.png"
+              alt="gyro"
+              class="gyro-value1"
+              id="gyro-value1"
+            />
+            <div id="gyro-text1"></div>
+            <div id="gyro-text2"></div>
+            <img
+              src="./assests/Slice_1__5_-removebg-preview.png"
+              alt="gyro"
+              class="gyro-value2"
+              id="gyro-value2"
+            />
           </div>
         </div>
         <div class="compass" id="compass">
@@ -153,6 +163,7 @@
           <div class="compass-status value-box">
             <div>compass</div>
             <div class="value" id="compass-value2"></div>
+          </div>
         </div>
       </div>
     </div>

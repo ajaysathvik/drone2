@@ -9,7 +9,8 @@ logging.basicConfig(filename='logile.log',format='%(asctime)s - %(message)s',fil
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-vehicle = connect('127.0.0.1:14550', wait_ready=True)
+baud_rate = 57600
+vehicle = connect('/dev/ttyACM0',baud=baud_rate,wait_ready=True)
 
 def arm():
     while vehicle.is_armable == False:
@@ -58,6 +59,7 @@ def check_version_2():
 
 @eel.expose
 def check_battery():
+    vehicle.wait_ready('battery')
     battery = vehicle.battery.level
     return battery
 
