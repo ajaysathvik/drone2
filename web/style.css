@@ -8,546 +8,164 @@
   font-family: "Inria Sans", sans-serif;
 }
 
+.nav-bar {
+  margin-left: auto;
+  width: 80%;
+  height: 6vh;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .main-section {
-  display: flex;
-  flex-direction: row;
   width: 100%;
-  height: 100vh;
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.s1 {
-  width: 15%;
-  display: flex;
-  flex-direction: column;
-}
-
-.heading {
-  width: 100%;
-  height: 9.45%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 94vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 1px;
-}
-
-.heading-box {
-  width: 90%;
-  height: 90%;
-  border-radius: 10px;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 1.4vh;
-}
-
-.gyro {
-  width: 100%;
-  height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0.7vh;
-}
-
-#gyro-text1 {
-  position: absolute;
-  top: 26.5vh;
-  left: 10.3vw;
-  z-index: 9999;
-}
-
-#gyro-text2 {
-  position: absolute;
-  top: 26.5vh;
-  left: 2.2vw;
-  z-index: 9999;
-}
-
-.gyro-box {
-  width: 90%;
-  height: 90%;
-  border-radius: 10px;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-}
-
-.gyro-img {
-  max-width: 12vw;
-  max-height: 12vw;
-  margin: auto;
-}
-
-.gyro-value1 {
-  transform: translate(0vw, -19.4vh) rotate(0deg);
-  display: flex;
   flex-direction: row;
-  justify-content: center;
-  z-index: 9999;
+  background-color: rgb(63, 63, 63);
 }
 
-.gyro-value2 {
-  transform: translate(0vw, -39.4vh) rotate(0deg);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.compass {
-  width: 90%;
-  height: 19%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
+.btn-connect {
+  width: 100px;
+  height: 40px;
+  background-color: rgb(219, 211, 255);
+  border: none;
   border-radius: 10px;
-  justify-content: center;
-  align-items: center;
-  background: #f3f7f9;
-}
-
-.compass img {
-  max-width: 5vw;
-  max-height: 5vh;
-  margin-bottom: 2rem;
-}
-
-.compass-box {
-  border-radius: 10px;
-  background: #f3f7f9;
-}
-
-.mission-data {
-  width: 90%;
-  height: 47.5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1.5vh;
-  background: #f3f7f9;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
-.s2 {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 15px 0px;
-  gap: 14px;
-}
-
-.main-tab {
-  width: 100%;
-  height: 8.5%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-}
-
-.arm-status {
-  width: 12vw;
-  height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#mission-window {
-  display: none;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  width: 35vw;
-  height: 35vh;
-  border-radius: 15px;
-  background-color: white;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1;
-  flex-direction: column;
-}
-
-#map {
-  z-index: 0;
-}
-
-.confirm-button {
-  position: absolute;
-  top: 30vh;
-  left: 25vw;
-  color: white;
-  display: flex;
-}
-
-.alt-text-window {
-  padding-top: 5px;
-}
-
-input {
-  border: 0.1rem solid #c3c3c3;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.cancel-button {
-  position: absolute;
-  top: 30vh;
-  left: 18vw;
-  color: white;
-  display: flex;
-}
-
-.set-alt {
-  display: flex;
-  flex-direction: row;
-  margin: 2rem;
-  margin-bottom: 0rem;
-  margin-top: 1.3rem;
-}
-
-#alt-value1 {
-  position: absolute;
-  top: 2vh;
-  left: 7vw;
-}
-
-#alt-value2 {
-  position: absolute;
-  top: 6vh;
-  left: 7vw;
-}
-
-#alt-value3 {
-  position: absolute;
-  top: 10vh;
-  left: 7vw;
-}
-
-.arm-status img {
-  max-width: 8vw;
-  max-height: 8vh;
-}
-
-.arm-text {
-  display: flex;
-  padding-left: 10px;
-  flex-direction: column;
-}
-
-.arm-status-text {
-  color: #919191;
-  text-align: center;
+  color: rgb(0, 0, 0);
   font-size: 15px;
-  font-style: bold;
-  font-weight: 500;
-}
-
-.arm-value {
-  padding-top: 5px;
-}
-
-.mode {
-  width: 12vw;
-  height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.mode img {
-  max-width: 8vw;
-  max-height: 8vh;
-}
-
-.mode-text {
-  display: flex;
-  padding-left: 10px;
-  flex-direction: column;
-}
-
-.mode-status-text {
-  color: #919191;
-  font-size: 15px;
-  font-style: bold;
-  font-weight: 500;
-}
-
-.mode-value {
-  padding-top: 5px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .battery {
-  width: 12vw;
-  height: 10vh;
-  padding-left: 6vw;
+  height: 66%;
+  background-color: rgb(255, 255, 255);
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.battery img {
-  max-width: 3vw;
-  max-height: 6vh;
-  margin-left: -4vw;
 }
 
 #battery-value-bar {
+  height: 1.7vh;
   position: absolute;
-  top: 4.5vh;
-  left: 43.42vw;
-  background-color: #34c759;
-  height: 2vh;
-  border-radius: 4px;
+  margin-right: 2vw;
+  border-radius: 5px;
+  background-color: rgb(69, 255, 45);
 }
 
-.battery-text {
-  display: flex;
-  margin-left: 1vw;
-  flex-direction: column;
-}
-
-.battery-status-text {
-  color: #919191;
-  font-size: 15px;
-  font-style: bold;
-  font-weight: 500;
-}
-
-.battery-value {
-  padding-top: 5px;
-}
-
-.temp {
-  width: 12vw;
-  height: 10vh;
+#section1 {
+  width: 25%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.temp img {
-  max-width: 8vw;
-  max-height: 8vh;
-  margin-left: 2.5vw;
-}
-
-.temp-text {
-  display: flex;
   flex-direction: column;
-  margin-left: -1vw;
+  /* background-color: transparent; */
 }
 
-.temp-status-text {
-  color: #919191;
-  font-size: 15px;
-  font-style: bold;
-  font-weight: 500;
-}
-
-.temp-value {
-  padding-top: 5px;
-}
-
-.alt {
-  width: 12vw;
-  height: 10vh;
+#section2 {
+  width: 75%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(105, 105, 105);
 }
 
-.alt img {
-  max-width: 8vw;
-  max-height: 8vh;
-  margin-left: 2.5vw;
-}
-
-.alt-text {
+#sec1-1 {
+  width: 96%;
+  height: 25%;
   display: flex;
-  flex-direction: column;
-}
-
-.alt-status-text {
-  color: #919191;
-  font-size: 15px;
-  font-style: bold;
-  font-weight: 500;
-}
-
-.alt-value {
-  padding-top: 5px;
-}
-
-.map-button {
-  color: white;
-  z-index: 9999;
-  display: none;
-}
-
-.action,
-.confirm-button,
-.cancel-button,
-.map-button {
+  justify-content: center;
+  align-items: center;
+  /* opacity: 0.5; */
+  margin: 10px;
   border-radius: 10px;
-  background: #2588f7;
-  padding: 20px 40px;
-  max-height: 1vh;
-  max-width: 8vw;
+  background-color: rgb(254, 254, 254);
+}
+
+#sec1-2 {
+  width: 100%;
+  height: 80%;
+  background-color: rgb(219, 211, 255);
+}
+
+.gyro-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #3498db;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotate 2s linear infinite;
+}
+
+.gyro-ball {
+  width: 50px;
+  height: 50px;
+  background-color: #ecf0f1;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#gyro-img{
+  border-radius: 11px;
+}
+
+#bar {
+  width: 100%;
+  height: 10%;
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 2vw;
+  opacity: 0.9;
+  background-color: rgb(245, 245, 245);
+}
+
+.bar {
+  width: 90%;
+  height: 80%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   cursor: pointer;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
+  margin: 8px;
+  border-radius: 15px;
+  transition: background-color 0.2s ease;
 }
 
-#mission {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 1.5vh;
+#bar1 {
+  background-color: transparent;
 }
 
-.mission-button {
-  margin-left: 0;
-  margin-top: 1.5rem;
-  border: none;
-  color: white;
-}
-
-.action h4 {
-  color: white;
-  font-size: 15px;
-  font-style: bold;
-  font-weight: 500;
-}
-
-.action {
-  display: flex;
-}
-
-.camera {
+#display {
   width: 100%;
-  height: 39.5%;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: #d9d9d9;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-}
-
-.map {
-  width: 100%;
-  height: 49%;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: #d9d9d9;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-}
-
-.s3 {
-  width: 15%;
-  background-color: #f3f7f9;
-  margin: 15px;
-  border-radius: 10px;
-  box-shadow: 1px 1px 25px 10px rgba(0, 0, 0, 0.1);
-}
-
-.compass img {
-  background: none;
-}
-
-.drone-status-heading {
-  width: 94%;
-  margin-top: 1vh;
-  border-radius: 10px;
+  height: 45%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  color: white;
-  font-weight: 600;
-  font-size: 20px;
-  height: 5.45%;
-  background-color: #2588f7;
-}
-
-.drone-details-box {
-  width: 80%;
-  margin-top: 1.75vh;
-  font-size: 20px;
-  font-weight: 400;
-  color: #919191;
-}
-
-.value {
-  color: black !important;
-  margin-left: 7rem;
-}
-
-.value-box {
-  display: flex;
+  background-color: rgb(255, 255, 255);
   flex-direction: row;
-  margin-bottom: 0.7rem;
 }
 
-#temperature-value2 {
-  margin-left: 3.25rem;
-}
-
-#status-value2 {
-  margin-left: 2.7rem;
-}
-
-#latitude-value2 {
-  margin-left: 5.8rem;
-}
-
-#altitude-value2 {
-  margin-left: 5.74rem;
-}
-
-#longitude-value2 {
-  margin-left: 4.84rem;
+#altitude-value {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #ground-speed-value {
-  margin-left: 2.6rem;
-}
-
-#battery-value2 {
-  margin-left: 6.15rem;
-}
-
-#arm-value {
-  margin-left: 6.65rem;
-}
-
-#direction-value2 {
-  margin-left: 5.3rem;
-}
-
-#version-value {
-  margin-left: 6.35rem;
-}
-
-#compass-value2 {
-  margin-left: 5.6rem;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

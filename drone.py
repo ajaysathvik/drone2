@@ -4,13 +4,25 @@ import time
 import cv2
 import eel
 import logging
+import socket
 
 logging.basicConfig(filename='logile.log',format='%(asctime)s - %(message)s',filemode='w')
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
 baud_rate = 57600
-vehicle = connect('/dev/ttyACM0',baud=baud_rate,wait_ready=True)
+# vehicle = connect('/dev/ttyACM0',baud=baud_rate,wait_ready=True)
+vehicle = connect('127.0.0.1:14550',wait_ready=True , baud=baud_rate)
+# vehicle = connect('0.0.0.0:14551',wait_ready=True , baud=baud_rate)
+
+# drone_ip = "127.0.0.1"  # Replace with your drone's IP address
+# drone_port = 14560
+
+
+
+
+# # Connect to the drone using MAVLink over UDP
+# vehicle = connect(f"udp:{drone_ip}:{drone_port}", wait_ready=True)
+
 
 def arm():
     while vehicle.is_armable == False:
@@ -65,6 +77,7 @@ def check_battery():
 
 @eel.expose
 def check_altitude():
+    vehicle.send_calibrate_barometer()
     altitude = vehicle.location.global_relative_frame.alt
     return altitude
 
@@ -73,13 +86,13 @@ def check_roll():
     roll = vehicle.attitude.roll
     return roll
      
-
+@eel.expose
 def check_pitch():
     pitch = vehicle.attitude.pitch
+    return pitch
     
     
 def check_velocity():
-
     northward_velocity = vehicle.velocity[0]
     eastward_velocity = vehicle.velocity[1]
     upward_velocity = vehicle.velocity[2]
@@ -127,11 +140,6 @@ def check_is_armable():
 @eel.expose
 def check_armed():
     return vehicle.armed
-
-@eel.expose
-def check_temperature():
-    temperature = vehicle.battery.level
-    return temperature
 
 @eel.expose
 def check_status():
