@@ -3,96 +3,76 @@ import matplotlib.pyplot as plt
 import time
 import cv2
 import eel
-import logging
-import socket
 
-logging.basicConfig(filename='logile.log',format='%(asctime)s - %(message)s',filemode='w')
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
 baud_rate = 57600
-# vehicle = connect('/dev/ttyACM0',baud=baud_rate,wait_ready=True)
-vehicle = connect('127.0.0.1:14550',wait_ready=True , baud=baud_rate)
+# vehicle = connect('127.0.0.1:5762')
 # vehicle = connect('0.0.0.0:14551',wait_ready=True , baud=baud_rate)
 
 # drone_ip = "127.0.0.1"  # Replace with your drone's IP address
 # drone_port = 14560
 
 
-
-
 # # Connect to the drone using MAVLink over UDP
 # vehicle = connect(f"udp:{drone_ip}:{drone_port}", wait_ready=True)
 
+global vehicle 
+# vehicle = connect("/dev/ttyUSB0", baud=baud_rate)
 
+@eel.expose
+def connect_vehicle():
+    global vehicle
+    vehicle = connect('/dev/ttyUSB0' ,baud = baud_rate)
+    # vehicle = connect('127.0.0.1:14550', wait_ready=True, baud=baud_rate)
+    
 def arm():
+    global vehicle
     while vehicle.is_armable == False:
-       print("Waiting")
        time.sleep(1)
     vehicle.armed = True
 
-    while vehicle.armed == False:
-        print("Waiting to become armed")
-
-    print("vehicle is now armed")
-
-def video():
-    cap = cv2.VideoCapture(0) 
-    if not cap.isOpened():
-        print("Error opening video capture")
-        exit()
-    while True:
-        # Capture frame-by-frame
-        ret, frame = cap.read()
-
-        # Check if frame is captured successfully
-        if not ret:
-            print("Error capturing frame")
-            break
-
-        # Process the frame (e.g., display, perform computer vision tasks)
-        # ...
-        cv2.imshow('Video Feed', frame)
-
-        # Wait for key press
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break 
-
 @eel.expose
 def version_major():
+    global vehicle
     return vehicle.version.major
+
 
 @eel.expose
 def version_minor():
+    global vehicle
     return vehicle.version.minor
 
-def check_version_2():
-    if vehicle.version.is_stable:
-        print ("upgrade the drone version to 3 or higher")
+# def check_version_2():
+#     global vehicle
+#     if vehicle.version.is_stable:
 
 @eel.expose
 def check_battery():
+    global vehicle
     vehicle.wait_ready('battery')
     battery = vehicle.battery.level
     return battery
 
 @eel.expose
 def check_altitude():
-    vehicle.send_calibrate_barometer()
+    global vehicle
     altitude = vehicle.location.global_relative_frame.alt
     return altitude
 
 @eel.expose
 def check_roll():
+    global vehicle
     roll = vehicle.attitude.roll
     return roll
      
 @eel.expose
 def check_pitch():
+    global  vehicle
     pitch = vehicle.attitude.pitch
     return pitch
     
     
 def check_velocity():
+    global vehicle
     northward_velocity = vehicle.velocity[0]
     eastward_velocity = vehicle.velocity[1]
     upward_velocity = vehicle.velocity[2]
@@ -124,58 +104,73 @@ def check_velocity():
     plt.savefig("velocity.png")
 
 def check_airspeed():
+    global vehicle
     print (vehicle.airspeed)
 
 def check_groundspeed():
+    global vehicle
     print (vehicle.groundspeed)
 
 @eel.expose
 def check_mode():
+    global  vehicle
     vehicle_mode = vehicle.mode.name
     return vehicle_mode
             
 def check_is_armable():
+    global vehicle
     return vehicle.is_armable
 
 @eel.expose
 def check_armed():
+    global vehicle
     return vehicle.armed
 
 @eel.expose
 def check_status():
+    global vehicle
     return vehicle.system_status.state   
 
 def check_parameters():
+    global vehicle
     print (vehicle.parameters['THR_MIN'])
 
 def check_gps():
+    global vehicle
     print (vehicle.gps_0)
 
 def check_last_heartbeat():
+    global vehicle
     print (vehicle.last_heartbeat)
 
 def check_home_location():
+    global vehicle
     print (vehicle.home_location)
 
 @eel.expose
 def mission_check():
+    global vehicle
     cmds = vehicle.commands
     return cmds.count
 
 @eel.expose
 def compass_calibration():
+    global vehicle
     return vehicle.capabilities.compass_calibration
 
 @eel.expose
 def set_mode(mode):
+    global vehicle
     vehicle.mode = VehicleMode(mode)
     
 @eel.expose
 def set_status(status):
+    global vehicle
     vehicle.system_status.state = status  
      
 @eel.expose
 def set_mission(lat,lon,alt):
+    global vehicle
     vehicle.mode = VehicleMode("GUIDED")
     vehicle.armed = True
     vehicle.simple_takeoff(alt)
@@ -187,30 +182,37 @@ def set_mission(lat,lon,alt):
 
 @eel.expose
 def check_location_lat():
+    global vehicle
     return vehicle.location.global_relative_frame.lat
 
 @eel.expose
 def check_location_lon():
+    global vehicle
     return vehicle.location.global_relative_frame.lon
 
 @eel.expose
 def check_location_alt():
+    global vehicle
     return vehicle.location.global_relative_frame.alt
 
 @eel.expose
 def make_guided():
+    global vehicle
     vehicle.mode = VehicleMode("GUIDED")
     
 @eel.expose
 def compass():
+    global vehicle
     return vehicle.heading
     
 @eel.expose
 def make_arm():
+    global vehicle
     vehicle.armed = True
 
 @eel.expose
 def ground_speed():
+    global vehicle
     return vehicle.groundspeed
 
 # def get_path(path):
@@ -241,6 +243,45 @@ def ground_speed():
 #         return os.path.abspath(path)
  
     
-# eel.init(path=get_path("web"))
+# eel.init(path=get_path("web")) 
+
+# def print_info():
+#     global vehicle
+#     print(vehicle.battery)
+#     print("Roll: %s Pitch %s Yaw %s" % (vehicle.attitude.roll, vehicle.attitude.pitch, vehicle.attitude.yaw))
+#     print("Velocity: %s" % vehicle.velocity)
+#     print("Airspeed: %s" % vehicle.airspeed)
+#     print("Groundspeed: %s" % vehicle.groundspeed)
+#     print("Mode: %s" % vehicle.mode.name)
+#     print("Armed: %s" % vehicle.armed)
+#     print("Status: %s" % vehicle.system_status.state)
+#     print("Vehicle Heading: %s" % vehicle.heading)
+#     print("Location: %s" % vehicle.location.global_relative_frame)
+#     print("latitude: %s longitude: %s altitude: %s" % (vehicle.location.global_relative_frame.lat, vehicle.location.global_relative_frame.lon, vehicle.location.global_relative_frame.alt))
+
+# @eel.expose
+# def print_info():
+#     global vehicle
+#     print(vehicle.battery)
+#     print("Roll: %s Pitch %s Yaw %s" % (vehicle.attitude.roll, vehicle.attitude.pitch, vehicle.attitude.yaw))
+#     print("Velocity: %s" % vehicle.velocity)
+#     print("Airspeed: %s" % vehicle.airspeed)
+#     print("Groundspeed: %s" % vehicle.groundspeed)
+#     print("Mode: %s" % vehicle.mode.name)
+#     print("Armed: %s" % vehicle.armed)
+#     print("Status: %s" % vehicle.system_status.state)
+#     print("Vehicle Heading: %s" % vehicle.heading)
+#     print("Location: %s" % vehicle.location.global_relative_frame)
+#     print("latitude: %s longitude: %s altitude: %s" % (vehicle.location.global_relative_frame.lat, vehicle.location.global_relative_frame.lon, vehicle.location.global_relative_frame.alt))
+
+@eel.expose
+def calibrate_sensors():
+    global vehicle
+    vehicle.send_calibrate_accelerometer()
+    vehicle.send_calibrate_gyro()
+    vehicle.send_calibrate_barometer()
+    vehicle.send_calibrate_vehicle_level()
+
+    
 eel.init("web")
 eel.start('index.html', size=(2400,1080))

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Drone Controller</title>
     <link rel="stylesheet" href="style.css" />
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script> -->
   </head>
   <body>
     <main>
@@ -20,15 +19,35 @@
           <div id="battery-value"></div>
         </div>
         <div class="connection-status">status</div>
-        <button class="btn-connect">Connect</button>
+        <button class="btn-connect" id="connect">Connect</button>
       </nav>
       <section class="main-section">
         <div id="section1">
           <div id="sec1-1">
             <div class="gyro-container">
-              <!-- <img src="./assests/Slice 3 (1).png" alt="" id="gyro-img" /> -->
-
-              <div class="gyro-ball"></div>
+              <div class="gyro-ball">
+                <div class="gyro-1">
+                  <div class="gyro-1-container" id="gyro-1-container">
+                    <img
+                      src="./assests/Untitled design (1).png"
+                      id="gyro-img1"
+                    />
+                    <img
+                      src="./assests/Untitled design (3).png"
+                      id="gyro-img2"
+                    />
+                  </div>
+                  <img
+                    src="./assests/Slice_1__4_-removebg-preview.png"
+                    alt=""
+                    id="gyro-1-img"
+                  />
+                </div>
+                <div class="gyro-2">
+                  <img src="./assests/Slice 3 (3).png" />
+                  <img src="./assests/compass (2).png" id="compass-img" />
+                </div>
+              </div>
             </div>
           </div>
           <div id="sec1-2">
@@ -38,13 +57,40 @@
               <div id="bar3" class="bar">Mission</div>
               <div id="bar4" class="bar">Drone</div>
             </div>
-            <div id="display">
-              <div id="altitude-value"></div>
-              <div id="ground-speed-value"></div>
-            </div>
-            <div id="display">
-              <div id="altitude-value2"></div>
-              <div id="ground-speed-value2"></div>
+            <div id="stats">
+              <div id="display1" class="dis">
+                <div id="altitude-value">
+                  <div class="altitude-meter">
+                    <div class="meter-val">
+                      <div class="outer-circle" id="outer-circle-alt"></div>
+                      <div class="middle-circle"></div>
+                    </div>
+                    <div id="alt-value"></div>
+                  </div>
+                </div>
+                <div id="ground-speed-value">
+                  <div class="speed-meter">
+                    <div class="meter-val">
+                      <div class="outer-circle" id="outer-circle-speed"></div>
+                      <div class="middle-circle"></div>
+                    </div>
+                    <div id="speed-value"></div>
+                  </div>
+                </div>
+              </div>
+              <div id="display2" class="dis">
+                <div class="main-bar">
+                  <div class="log-bar">
+                    <div class="log-bar-value" id="log-bar-value"></div>
+                  </div>
+                </div>
+              </div>
+              <div id="display3" class="dis">
+                <div class="main-bar"></div>
+              </div>
+              <div id="display4" class="dis">
+                <div class="main-bar">Something About Drone</div>
+              </div>
             </div>
           </div>
         </div>

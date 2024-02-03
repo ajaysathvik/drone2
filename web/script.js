@@ -1,10 +1,10 @@
 const bars = document.querySelectorAll(".bar");
-let bar_val = "";
 
 function handleBarClick(clickedBarId) {
   bars.forEach((bar) => {
     const barId = bar.id;
     const isSelected = barId === clickedBarId;
+    console.log(barId, clickedBarId);
     bar.style.backgroundColor = isSelected
       ? "rgb(219, 211, 255)"
       : "transparent";
@@ -12,7 +12,41 @@ function handleBarClick(clickedBarId) {
       bar_val = bar.innerHTML.trim();
     }
   });
+
+  if (bar_val == "Status") {
+    console.log("Status");
+    document.getElementById("display1").style.display = "flex";
+  } else {
+    document.getElementById("display1").style.display = "none";
+  }
+
+  if (bar_val == "Logs") {
+    console.log("Compass");
+    document.getElementById("display2").style.display = "flex";
+  } else {
+    document.getElementById("display2").style.display = "none";
+  }
+
+  if (bar_val == "Mission") {
+    console.log("Mission");
+    document.getElementById("display3").style.display = "flex";
+  } else {
+    document.getElementById("display3").style.display = "none";
+  }
+
+  if (bar_val == "Drone") {
+    console.log("Drone");
+    document.getElementById("display4").style.display = "flex";
+  } else {
+    document.getElementById("display4").style.display = "none";
+  }
 }
+
+async function connect() {
+  await eel.connect_vehicle()();
+}
+
+document.getElementById("connect").addEventListener("click", connect);
 
 bars.forEach((bar) => {
   bar.addEventListener("click", () => handleBarClick(bar.id));
@@ -45,14 +79,17 @@ async function check_altitude() {
   if (rounded_output == -0.0) {
     rounded_output = 0;
   }
+
   if (bar_val == "Status") {
-    document.getElementById("altitude-value").innerHTML =
+    document.getElementById("alt-value").innerHTML =
       "Alt: " + rounded_output + " m";
   } else {
-    document.getElementById("altitude-value").innerHTML = "";
+    document.getElementById("alt-value").innerHTML = "";
   }
-  // document.getElementById("altitude-value2").innerHTML = rounded_output + " m";
-  // document.getElementById("gyro-text1").innerHTML = rounded_output + " m";
+
+  output = output * 18;
+  document.getElementById("outer-circle-alt").style.transform =
+    "rotate(" + output + "deg)";
 }
 
 async function check_status() {
@@ -62,13 +99,17 @@ async function check_status() {
 }
 
 async function Ground_speed() {
-  const output = await eel.ground_speed()();
+  output = await eel.ground_speed()();
   if (bar_val == "Status") {
-    document.getElementById("ground-speed-value").innerHTML =
+    document.getElementById("speed-value").innerHTML =
       "Ground Speed: " + output.toFixed(1) + " m/s";
   } else {
-    document.getElementById("ground-speed-value").innerHTML = "";
+    document.getElementById("speed-value").innerHTML = "";
   }
+
+  output = output * 36;
+  document.getElementById("outer-circle-speed").style.transform =
+    "rotate(" + output + "deg)";
 }
 
 async function arm() {
@@ -80,33 +121,24 @@ async function arm() {
   }
 }
 
-async function version() {
-  const output = await eel.version_major()();
-  const output2 = await eel.version_minor()();
-  // document.getElementById("version-value").innerHTML = output + "." + output2;
-}
-
 async function check_mode() {
   const output = await eel.check_mode()();
   document.getElementById("mode-value").innerHTML = output;
-  // document.getElementById("mode-value2").innerHTML = output;
 }
 
 async function compass_calibration() {
-  var compass = await eel.compass_calibration()();
   if (compass == true) {
-    compass_value();
-    // document.getElementById("compass-value2").innerHTML = "True";
+    compass_value(); // document.getElementById("compass-value2").innerHTML = "True";
   } else {
     document.getElementById("compass-box").style.display = "none";
-    document.getElementsByClassName("compass")[0].innerHTML =
-      "Compass Not Found";
+    document.get; // document.getElementById("compass-value2").innerHTML = "True";
+    ElementsByClassName("compass")[0].innerHTML = "Compass Not Found";
     document.getElementById("compass-value2").innerHTML = "False";
   }
 }
 
 async function compass_value() {
-  output = await eel.compass()();
+  var output = await eel.compass()();
   a = output % 90;
   b = Math.floor(output / 90);
   if (b == 0) {
@@ -119,14 +151,12 @@ async function compass_value() {
     b = "W";
   }
   output = output - 45;
-  // document.getElementById("compass-needle").style.transform =
-  //   "rotate(" + output + "deg)";
-  // document.getElementsByClassName("compass-value")[0].innerHTML = a + "° " + b;
-  document.getElementById("direction-value2").innerHTML = a + "° " + b;
+  document.getElementById("compass-img").style.transform =
+    "translate(-50%, -50%) rotate(" + output + "deg)";
 }
 
 async function mission_check() {
-  const output = await eel.mission_check()();
+  // const output = await eel.mission_check()();
   // if (output == 0) {
   //   const mission = document.getElementById("mission");
   //   // mission.innerHTML = "Mission Not Set";
@@ -137,7 +167,6 @@ async function mission_check() {
   //   button.addEventListener("click", async function () {
   //     document.getElementById("mission-window").style.display = "flex";
   //   });
-
   // button2 = mission.appendChild(document.createElement("button"));
   // button2.setAttribute("class", "mission-button map-button");
   // button2.appendChild(document.createElement("h4"));
@@ -145,13 +174,11 @@ async function mission_check() {
   // button2.addEventListener("click", async function () {
   //   document.getElementById("map-window").style.display = "flex";
   // });
-
   // document
   //   .getElementById("cancel-button")
   //   .addEventListener("click", async function () {
   //     document.getElementById("mission-window").style.opacity = "0";
   //   });
-
   // document
   //   .getElementById("confirm-button")
   //   .addEventListener("click", async function () {
@@ -179,28 +206,30 @@ async function mission_check() {
   //   });
 }
 
-// async function roll() {
-//   var output = await eel.check_roll()();
-//   var rounded_output = output.toFixed(2);
-//   if (rounded_output == -0.0) {
-//     rounded_output = 0.0;
-//   }
-//   rounded_output = rounded_output * -60;
-//   document.getElementById("gyro-meter").style.transform =
-//     "rotate(" + rounded_output + "deg)";
-// }
+async function roll() {
+  var output = await eel.check_roll()();
+  var rounded_output = output.toFixed(2);
+  if (rounded_output == -0.0) {
+    rounded_output = 0.0;
+  }
+  rounded_output = rounded_output * 60;
+  document.getElementById("gyro-1-container").style.transform =
+    "rotate(" + rounded_output + "deg)";
+}
 
-// async function pitch() {
-//   var output2 = await eel.check_pitch()();
-//   var rounded_output = output2.toFixed(2);
-//   if (rounded_output == -0.0) {
-//     rounded_output = 0.0;
-//   }
-//   rounded_output = rounded_output * 60;
-//   console.log(rounded_output);
-//   document.getElementById("gyro-meter").style.transform =
-//     "TranslateY(" + rounded_output + "px)";
-// }
+async function pitch() {
+  var output2 = await eel.check_pitch()();
+  var rounded_output = output2.toFixed(2);
+  if (rounded_output == -0.0) {
+    rounded_output = 0.0;
+  }
+  rounded_output = rounded_output * 66.66;
+  g1 = document.getElementById("gyro-img1");
+  g2 = document.getElementById("gyro-img2");
+
+  g1.style.height = 100 + rounded_output + "%";
+  g2.style.height = 100 - rounded_output + "%";
+}
 
 async function updateGyroMeter() {
   try {
@@ -265,7 +294,7 @@ async function location_coordinates() {
   // });
 }
 
-location_coordinates();
+// location_coordinates();
 
 setInterval(() => {
   check_altitude();
@@ -275,12 +304,34 @@ setInterval(() => {
   check_mode();
   // compass_calibration();
   Ground_speed();
-  // arm();
-  // version();
-  // check_location();
-  // roll();
-  // pitch();
-  // updateGyroMeter();
-}, 100);
+  arm();
+  //   // version();
+  //   // check_location();
+  roll();
+  pitch();
+  //   // updateGyroMeter();
+  compass_value();
+
+}, 400)
 
 mission_check();
+
+async function calibrate(){
+  await eel.calibrate_sensors()();
+}
+
+calibrate()
+
+// async function log() {
+//   await eel.logging_info()();
+// }
+
+// async function print_log() {
+//   document.getElementById("log-bar-value").style.display = "flex";
+//   var output = await eel.print_log()();
+//   document.getElementById("log-bar-value").innerHTML = output;
+// }
+
+// setInterval(() => {
+//   log();
+// }, 10000);
